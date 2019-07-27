@@ -1,0 +1,105 @@
+@host = http://localhost:8080/gestaocontato/v1
+
+###################################### GET ######################################
+### 200
+GET {{host}}/user/contatos
+Authorization: Basic maria 123
+
+### 401
+GET {{host}}/user/contatos
+Authorization: Basic maria 12
+
+### 404
+GET {{host}}/user/contato
+Authorization: Basic maria 123
+
+
+###################################### POST ######################################
+### 201
+POST {{host}}/admin/contatos
+Content-Type: application/json
+Authorization: Basic maria 123
+
+{
+    "nome": "251",
+    "valor": "11111",
+    "canal": "telefone"
+}
+
+### 400
+POST {{host}}/admin/contatos
+Content-Type: application/json
+Authorization: Basic maria 123
+
+{
+    "valor": "11111",
+    "canal": "telefone"
+}
+
+### 401
+POST {{host}}/admin/contatos
+Content-Type: application/json
+Authorization: Basic maria 12
+
+{
+    "nome": "251",
+    "valor": "11111",
+    "canal": "telefone"
+}
+
+###################################### PUT ######################################
+### 204
+PUT {{host}}/admin/contatos/1
+Content-Type: application/json
+Authorization: Basic maria 123
+
+{
+    "nome": "teste",
+    "valor": "11111",
+    "canal": "telefone"
+}
+
+### 400
+PUT {{host}}/admin/contatos/1
+Content-Type: application/json
+Authorization: Basic maria 123
+
+{
+    "valor": "11111",
+    "canal": "telefone"
+}
+
+### 401
+PUT {{host}}/admin/contatos/1
+Content-Type: application/json
+Authorization: Basic maria 12
+
+{
+    "nome": "teste",
+    "valor": "11111",
+    "canal": "telefone"
+}
+
+### 404
+PUT {{host}}/admin/contatos/40
+Content-Type: application/json
+Authorization: Basic maria 123
+
+{
+    "nome": "teste",
+    "valor": "11111",
+    "canal": "telefone"
+}
+
+###################################### DELETE ######################################
+### 204
+DELETE  {{host}}/admin/contatos/2
+Authorization: Basic maria 123
+
+### 401
+DELETE  {{host}}/admin/contatos/2
+Authorization: Basic maria 12
+
+### 404
+DELETE  {{host}}/admin/contatos/20
+Authorization: Basic maria 123
