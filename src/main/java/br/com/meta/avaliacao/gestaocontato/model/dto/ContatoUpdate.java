@@ -1,6 +1,6 @@
 package br.com.meta.avaliacao.gestaocontato.model.dto;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 import br.com.meta.avaliacao.gestaocontato.model.Contato;
 import lombok.Getter;
@@ -14,13 +14,13 @@ import lombok.Setter;
 @Setter
 public class ContatoUpdate {
    
-    @NotNull(message = "{contato.nome.size}")
+    @NotBlank(message = "{contato.nome.size}")
     private String nome;
 
-    @NotNull
+    @NotBlank
     private String canal;
 
-    @NotNull
+    @NotBlank
     private String valor;
 
     private String obs;

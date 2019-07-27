@@ -41,11 +41,11 @@ public class ContatoController {
     public ContatoController(ContatoService contatoService) {
         this.contatoService = contatoService;
     }
-
-    @GetMapping(path = "user/contatos")
-    @ApiOperation(value = "Retorna uma lista de contatos", response = Contato[].class)
+    
     @ApiResponses(value = @ApiResponse(code = 200, message = ""))
-    public ResponseEntity<?> findAll(
+    @ApiOperation(value = "Retorna uma lista de contatos", response = Contato[].class)
+    @GetMapping(path = "user/contatos")
+    public ResponseEntity<List<Contato>> findAll(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
                             
@@ -53,37 +53,47 @@ public class ContatoController {
         return new ResponseEntity<>(contatos, HttpStatus.OK);
     }
 
-    @GetMapping(path = "user/contatos/{id}")
     @ApiResponses(value = @ApiResponse(code = 200, message = ""))
-    public ResponseEntity<?> getById(@PathVariable("id") String id) {
+    @ApiOperation(value = "Retorna um contato", response = Contato.class)
+    @GetMapping(path = "user/contatos/{id}")
+    public ResponseEntity<Contato> getById(@PathVariable("id") String id) {
         Contato contato = contatoService.getContatoOrThrowsException(id);
         return new ResponseEntity<>(contato, HttpStatus.OK);
     }
 
+    @ApiResponses(value = { 
+        @ApiResponse(code = 201, message = ""),
+        @ApiResponse(code = 403, message = "")})
+    @ApiOperation(value = "Retorna um contato com Id", response = Contato.class)
     @PostMapping(path = "admin/contatos")
     @Transactional(rollbackFor = Exception.class)
-    @ApiResponses(value = @ApiResponse(code = 201, message = ""))
     public ResponseEntity<?> create(@Valid @RequestBody ContatoCreate contatoCreate) {
         Contato contato = contatoCreate.criaContato();
         contatoService.insert(contato);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @ApiResponses(value = { 
+        @ApiResponse(code = 204, message = ""),
+        @ApiResponse(code = 403, message = "")})
+    @ApiOperation(value = "Retorna HttpStatus", response = HttpStatus.class, code = 204)
     @PutMapping(path = "admin/contatos/{id}")
     @Transactional(rollbackFor = Exception.class)
-    @ApiResponses(value = @ApiResponse(code = 204, message = ""))
-    public ResponseEntity<?> update(@Valid @RequestBody ContatoUpdate contatoUpdate, @PathVariable("id") String id) {
+    public HttpStatus update(@Valid @RequestBody ContatoUpdate contatoUpdate, @PathVariable("id") String id) {
         Contato contato = contatoUpdate.criaContato();
         contato.setId(id);
         contatoService.update(contato);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return HttpStatus.NO_CONTENT;
     }
 
+    @ApiResponses(value = { 
+        @ApiResponse(code = 204, message = ""),
+        @ApiResponse(code = 403, message = "")})
+    @ApiOperation(value = "Retorna HttpStatus", response = HttpStatus.class, code = 204)
     @DeleteMapping(path = "admin/contatos/{id}")
-    @ApiResponses(value = @ApiResponse(code = 204, message = ""))
-    public ResponseEntity<?> delete(@PathVariable String id) {
+    public HttpStatus delete(@PathVariable String id) {
         contatoService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return  HttpStatus.NO_CONTENT;
     }
 
 }
