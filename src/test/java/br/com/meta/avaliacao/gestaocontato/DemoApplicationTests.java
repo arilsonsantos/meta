@@ -11,6 +11,8 @@ public class DemoApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		String x = java.util.Base64.getUrlEncoder().encodeToString("admin:123".getBytes());
+		System.out.println(x);
 	}
 
 }

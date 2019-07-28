@@ -23,7 +23,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public final class ApplicationExceptionHandler extends ResponseEntityExceptionHandler {
 
-    
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> exceptionHandler(ResourceNotFoundException exception) {
+        ErrorDetail resourceNotFoundDetail = ErrorDetail.Builder
+        .newBuilder().timestamp(LocalDateTime.now())
+        .status(HttpStatus.NOT_FOUND.value())
+        .title("Resource not found")
+        .detail(exception.getMessage())
+        .developerMessage(exception.getClass().getName())
+        .build();
+        
+        return new ResponseEntity<>(resourceNotFoundDetail, HttpStatus.NOT_FOUND);
+    }
 
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception,

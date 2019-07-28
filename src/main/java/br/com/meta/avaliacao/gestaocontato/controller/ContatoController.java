@@ -24,6 +24,7 @@ import br.com.meta.avaliacao.gestaocontato.service.ContatoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.Authorization;
 
 /**
  * @author Arilson Santos
@@ -31,9 +32,8 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @RequestMapping("/v1")
-@ApiResponses(value = { 
-    @ApiResponse(code = 401, message = ""),
-    @ApiResponse(code = 404, message = "") })
+@ApiResponses(value = @ApiResponse(code = 401, message = "Unauthorized"))
+
 public class ContatoController {
 
     private final ContatoService contatoService;
@@ -43,8 +43,9 @@ public class ContatoController {
     }
     
     @ApiResponses(value = @ApiResponse(code = 200, message = ""))
-    @ApiOperation(value = "Retorna uma lista de contatos", response = Contato[].class)
-    @GetMapping(path = "user/contatos")
+    @ApiOperation(value = "Retorna uma lista de objetos do tipo Contato", authorizations = {
+        @Authorization(value="basicAuth")})
+    @GetMapping(path = "user/contatos", produces = "application/json")
     public ResponseEntity<List<Contato>> findAll(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
@@ -54,19 +55,20 @@ public class ContatoController {
     }
 
     @ApiResponses(value = @ApiResponse(code = 200, message = ""))
-    @ApiOperation(value = "Retorna um contato", response = Contato.class)
-    @GetMapping(path = "user/contatos/{id}")
+    @ApiOperation(value = "Retorna um único objeto do tipo Contato", authorizations = {
+        @Authorization(value="basicAuth")})
+    @GetMapping(path = "user/contatos/{id}", produces = "application/json")
     public ResponseEntity<Contato> getById(@PathVariable("id") String id) {
         Contato contato = contatoService.getContatoOrThrowsException(id);
         return new ResponseEntity<>(contato, HttpStatus.OK);
     }
 
     @ApiResponses(value = { 
-        @ApiResponse(code = 201, message = ""),
-        @ApiResponse(code = 403, message = "")})
-    @ApiOperation(value = "Retorna um contato com Id", response = Contato.class)
-    @PostMapping(path = "admin/contatos")
-    @Transactional(rollbackFor = Exception.class)
+        @ApiResponse(code = 201, message = "Updated"),
+        @ApiResponse(code = 400, message = "Bad Request")})
+    @ApiOperation(value = "Salva um registro do tipo Contato", authorizations = {
+        @Authorization(value="basicAuth")})
+    @PostMapping(path = "admin/contatos", produces = "application/json")
     public ResponseEntity<?> create(@Valid @RequestBody ContatoCreate contatoCreate) {
         Contato contato = contatoCreate.criaContato();
         contatoService.insert(contato);
@@ -74,26 +76,27 @@ public class ContatoController {
     }
 
     @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = ""),
-        @ApiResponse(code = 403, message = "")})
-    @ApiOperation(value = "Retorna HttpStatus", response = HttpStatus.class, code = 204)
+        @ApiResponse(code = 204, message = "No Content"),
+        @ApiResponse(code = 404, message = "Not Found")})
+    @ApiOperation(value = "Atualiza um registro do tipo Contato", authorizations = {
+        @Authorization(value="basicAuth")})
     @PutMapping(path = "admin/contatos/{id}")
     @Transactional(rollbackFor = Exception.class)
-    public HttpStatus update(@Valid @RequestBody ContatoUpdate contatoUpdate, @PathVariable("id") String id) {
+    public ResponseEntity<?> update(@Valid @RequestBody ContatoUpdate contatoUpdate, @PathVariable("id") String id) {
         Contato contato = contatoUpdate.criaContato();
         contato.setId(id);
         contatoService.update(contato);
-        return HttpStatus.NO_CONTENT;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = ""),
-        @ApiResponse(code = 403, message = "")})
-    @ApiOperation(value = "Retorna HttpStatus", response = HttpStatus.class, code = 204)
+        @ApiResponse(code = 204, message = "No Content"),
+        @ApiResponse(code = 404, message = "Not Found")})
+    @ApiOperation(value = "Deleta um contato", authorizations = {@Authorization(value="basicAuth")})
     @DeleteMapping(path = "admin/contatos/{id}")
-    public HttpStatus delete(@PathVariable String id) {
+    public ResponseEntity<?> delete(@PathVariable String id) {
         contatoService.delete(id);
-        return  HttpStatus.NO_CONTENT;
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

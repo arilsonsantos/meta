@@ -3,22 +3,26 @@
 ###################################### GET ######################################
 ### 200
 GET {{host}}/user/contatos
-Authorization: Basic maria 123
+Authorization: Basic admin 123
+
+### 200
+GET {{host}}/user/contatos?size=3&page=0
+Authorization: Basic admin 123
 
 ### 401
 GET {{host}}/user/contatos
-Authorization: Basic maria 12
+Authorization: Basic admin 12
 
 ### 404
 GET {{host}}/user/contato
-Authorization: Basic maria 123
+Authorization: Basic admin 123
 
 
 ###################################### POST ######################################
 ### 201
 POST {{host}}/admin/contatos
 Content-Type: application/json
-Authorization: Basic maria 123
+Authorization: Basic admin 123
 
 {
     "nome": "251",
@@ -29,7 +33,7 @@ Authorization: Basic maria 123
 ### 400
 POST {{host}}/admin/contatos
 Content-Type: application/json
-Authorization: Basic maria 123
+Authorization: Basic admin 123
 
 {
     "valor": "11111",
@@ -39,7 +43,7 @@ Authorization: Basic maria 123
 ### 401
 POST {{host}}/admin/contatos
 Content-Type: application/json
-Authorization: Basic maria 12
+Authorization: Basic admin 12
 
 {
     "nome": "251",
@@ -49,9 +53,9 @@ Authorization: Basic maria 12
 
 ###################################### PUT ######################################
 ### 204
-PUT {{host}}/admin/contatos/1
+PUT {{host}}/admin/contatos/5
 Content-Type: application/json
-Authorization: Basic maria 123
+Authorization: Basic admin 123
 
 {
     "nome": "teste",
@@ -62,7 +66,7 @@ Authorization: Basic maria 123
 ### 400
 PUT {{host}}/admin/contatos/1
 Content-Type: application/json
-Authorization: Basic maria 123
+Authorization: Basic admin 123
 
 {
     "valor": "11111",
@@ -72,7 +76,7 @@ Authorization: Basic maria 123
 ### 401
 PUT {{host}}/admin/contatos/1
 Content-Type: application/json
-Authorization: Basic maria 12
+Authorization: Basic admin 12
 
 {
     "nome": "teste",
@@ -81,9 +85,9 @@ Authorization: Basic maria 12
 }
 
 ### 404
-PUT {{host}}/admin/contatos/40
+PUT {{host}}/admin/contato
 Content-Type: application/json
-Authorization: Basic maria 123
+Authorization: Basic admin 123
 
 {
     "nome": "teste",
@@ -93,13 +97,13 @@ Authorization: Basic maria 123
 
 ###################################### DELETE ######################################
 ### 204
-DELETE  {{host}}/admin/contatos/2
-Authorization: Basic maria 123
+DELETE  {{host}}/admin/contatos/1
+Authorization: Basic admin 123
 
 ### 401
 DELETE  {{host}}/admin/contatos/2
-Authorization: Basic maria 12
+Authorization: Basic admin 12
 
 ### 404
 DELETE  {{host}}/admin/contatos/20
-Authorization: Basic maria 123
+Authorization: Basic admin 123

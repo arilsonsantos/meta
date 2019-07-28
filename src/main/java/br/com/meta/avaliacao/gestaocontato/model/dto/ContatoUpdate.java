@@ -3,6 +3,7 @@ package br.com.meta.avaliacao.gestaocontato.model.dto;
 import javax.validation.constraints.NotBlank;
 
 import br.com.meta.avaliacao.gestaocontato.model.Contato;
+import io.swagger.annotations.ApiModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@ApiModel(description = "DTO para atualização de um contato")
 public class ContatoUpdate {
    
     @NotBlank(message = "{contato.nome.size}")

@@ -42,10 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, "/user/sign-up").permitAll()
         .antMatchers("/*/admin/**").hasRole("ADMINISTRADOR")
-        .antMatchers("/*/user/**").hasAnyRole("USUARIO")
+        .antMatchers("/*/user/**").hasRole("USUARIO")
         .antMatchers("/h2-console/**").permitAll()
-        .antMatchers("/swagger.html/**").permitAll()
-        .anyRequest().authenticated()
+        .antMatchers("/swagger.html*/**").permitAll()
+        
         .and()
         .httpBasic()
         .and()
