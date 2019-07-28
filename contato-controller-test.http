@@ -1,4 +1,14 @@
-@host = http://localhost:8080/gestaocontato/v1
+@host = http://localhost:8080/gestaocontato
+
+### TOKEN
+
+POST {{host}}/login
+content-type: application/json
+
+{
+    "username": "user",
+    "password": "123"
+}
 
 ###################################### GET ######################################
 ### 200

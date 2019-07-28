@@ -1,5 +1,6 @@
 package br.com.meta.avaliacao.gestaocontato.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotEmpty;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -23,10 +25,13 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString(of = "nome")
+@ToString(of = "name")
 @EqualsAndHashCode(exclude = "grupos")
+@NoArgsConstructor
 @Entity
-public class Usuario  {
+public class Usuario implements Serializable  {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,10 +42,10 @@ public class Usuario  {
     private String username;
 
     @NotEmpty
-    private String senha;
+    private String password;
 
     @NotEmpty
-    private String nome;
+    private String name;
 
     @ManyToMany
     @JoinTable(name = "usuario_grupo",

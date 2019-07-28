@@ -45,11 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/*/user/**").hasRole("USUARIO")
         //.antMatchers("/h2-console/**").permitAll()
         //.antMatchers("/swagger.html*/**").permitAll()
-        
         .and()
-        .httpBasic()
-        .and()
-        .headers().frameOptions().sameOrigin()
+        .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+        .addFilter(new JWTAuthorizationFilter(authenticationManager(), usuarioService));
         ;
 
 

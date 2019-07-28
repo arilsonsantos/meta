@@ -38,7 +38,7 @@ public class UsuarioService implements UserDetailsService {
         nomesGrupos.forEach(ng -> strRoles += "ROLE_" + ng + ",");
         List<GrantedAuthority> grupos = AuthorityUtils.commaSeparatedStringToAuthorityList(strRoles);
 
-        return new User(usuario.getNome(), usuario.getSenha(), grupos);
+        return new User(usuario.getUsername(), usuario.getPassword(), grupos);
 	}
 
     

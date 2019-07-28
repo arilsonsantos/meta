@@ -1,5 +1,6 @@
 package br.com.meta.avaliacao.gestaocontato.config;
 
+
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import br.com.meta.avaliacao.gestaocontato.enumerations.SecurityEnum;
 import br.com.meta.avaliacao.gestaocontato.service.UsuarioService;
 import io.jsonwebtoken.Jwts;
 
@@ -31,7 +33,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        String header = request.getHeader("Authorization");
+        String header = request.getHeader(SecurityEnum.HEADER_STRING);
 
         if (header == null){ //|| !header.startsWith(SecurityEnum.TOKEN_PREFIX)) {
             chain.doFilter(request, response);
@@ -47,12 +49,12 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
     
     private UsernamePasswordAuthenticationToken getPasswordAuthenticationToken(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader(SecurityEnum.HEADER_STRING);
         if (token == null)
             return null;
 
-        String username = Jwts.parser().setSigningKey("TheBeatles")
-        .parseClaimsJws(token.replace("Bearer ", ""))
+        String username = Jwts.parser().setSigningKey(SecurityEnum.SECRET)
+        .parseClaimsJws(token.replace(SecurityEnum.TOKEN_PREFIX, ""))
                 .getBody().getSubject();
         
         UserDetails userDetails = usuarioService.loadUserByUsername(username);
