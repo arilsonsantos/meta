@@ -24,7 +24,6 @@ import br.com.meta.avaliacao.gestaocontato.service.ContatoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import io.swagger.annotations.Authorization;
 
 /**
  * @author Arilson Santos
@@ -32,8 +31,7 @@ import io.swagger.annotations.Authorization;
  */
 @RestController
 @RequestMapping("/v1")
-@ApiResponses(value = @ApiResponse(code = 401, message = "Unauthorized"))
-
+@ApiResponses(value =  @ApiResponse(code = 401, message = "Unauthorized"))
 public class ContatoController {
 
     private final ContatoService contatoService;
@@ -43,8 +41,7 @@ public class ContatoController {
     }
     
     @ApiResponses(value = @ApiResponse(code = 200, message = ""))
-    @ApiOperation(value = "Retorna uma lista de objetos do tipo Contato", authorizations = {
-        @Authorization(value="basicAuth")})
+    @ApiOperation(value = "Retorna uma lista de objetos do tipo Contato")
     @GetMapping(path = "user/contatos", produces = "application/json")
     public ResponseEntity<List<Contato>> findAll(
             @RequestParam(defaultValue = "1") Integer page,
@@ -55,8 +52,7 @@ public class ContatoController {
     }
 
     @ApiResponses(value = @ApiResponse(code = 200, message = ""))
-    @ApiOperation(value = "Retorna um único objeto do tipo Contato", authorizations = {
-        @Authorization(value="basicAuth")})
+    @ApiOperation(value = "Retorna um único objeto do tipo Contato")
     @GetMapping(path = "user/contatos/{id}", produces = "application/json")
     public ResponseEntity<Contato> getById(@PathVariable("id") String id) {
         Contato contato = contatoService.getContatoOrThrowsException(id);
@@ -66,8 +62,7 @@ public class ContatoController {
     @ApiResponses(value = { 
         @ApiResponse(code = 201, message = "Updated"),
         @ApiResponse(code = 400, message = "Bad Request")})
-    @ApiOperation(value = "Salva um registro do tipo Contato", authorizations = {
-        @Authorization(value="basicAuth")})
+    @ApiOperation(value = "Salva um registro do tipo Contato")
     @PostMapping(path = "admin/contatos", produces = "application/json")
     public ResponseEntity<?> create(@Valid @RequestBody ContatoCreate contatoCreate) {
         Contato contato = contatoCreate.criaContato();
@@ -78,8 +73,7 @@ public class ContatoController {
     @ApiResponses(value = { 
         @ApiResponse(code = 204, message = "No Content"),
         @ApiResponse(code = 404, message = "Not Found")})
-    @ApiOperation(value = "Atualiza um registro do tipo Contato", authorizations = {
-        @Authorization(value="basicAuth")})
+    @ApiOperation(value = "Atualiza um registro do tipo Contato")
     @PutMapping(path = "admin/contatos/{id}")
     @Transactional(rollbackFor = Exception.class)
     public ResponseEntity<?> update(@Valid @RequestBody ContatoUpdate contatoUpdate, @PathVariable("id") String id) {
@@ -92,7 +86,7 @@ public class ContatoController {
     @ApiResponses(value = { 
         @ApiResponse(code = 204, message = "No Content"),
         @ApiResponse(code = 404, message = "Not Found")})
-    @ApiOperation(value = "Deleta um contato", authorizations = {@Authorization(value="basicAuth")})
+    @ApiOperation(value = "Deleta um contato")
     @DeleteMapping(path = "admin/contatos/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         contatoService.delete(id);

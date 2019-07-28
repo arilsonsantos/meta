@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
@@ -34,17 +33,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-        .csrf().disable()
-        .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+        .csrf().disable().headers().frameOptions().disable()
         .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
+        // .and()
+        // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .authorizeRequests()
         .antMatchers(HttpMethod.GET, "/user/sign-up").permitAll()
         .antMatchers("/*/admin/**").hasRole("ADMINISTRADOR")
         .antMatchers("/*/user/**").hasRole("USUARIO")
-        .antMatchers("/h2-console/**").permitAll()
-        .antMatchers("/swagger.html*/**").permitAll()
+        //.antMatchers("/h2-console/**").permitAll()
+        //.antMatchers("/swagger.html*/**").permitAll()
         
         .and()
         .httpBasic()
