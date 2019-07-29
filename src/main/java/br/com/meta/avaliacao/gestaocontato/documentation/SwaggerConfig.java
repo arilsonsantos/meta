@@ -5,6 +5,7 @@ import java.util.Collections;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import br.com.meta.avaliacao.gestaocontato.util.TokenUtil;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -42,10 +43,12 @@ public class SwaggerConfig {
    
 
     private ApiInfo apiInfo() {
+        TokenUtil tokenUtil = new TokenUtil();
+        String adminToken = tokenUtil.getToken("admin");
         return new ApiInfoBuilder().title("Documentação da API Gestão de Contatos")
         .description("Este documento permite testar a API de Gestão de Contatos \n\n" + 
-            "Para a execução dos métodos, é necessário a utilização de um token, use o token abaixo: \n\n" +
-        "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2NDM3MjQ3OH0.oYJZPxaXiqTEFv9k0d6lcVsUPv_raR7ewf2Ldd9stD4c2XNmlHtP-6TG90WfTghwpLsGAJUMc7a7xz3MH7kSIw\n\n" +
+            "Para testar a execução dos métodos, é necessário a utilização de um token, use os tokens abaixo: \n\n" +
+            adminToken + "\n\n" +
              "Ou utilize o comando abaixo ou use o POSTMAN para geração do token. \n\n\n" +
             "curl -d '{\"username\":\"admin\", \"password\":\"123\"}' " +
             "-H \"Content-Type: application/json\" -X POST http://localhost:8080/gestaocontato/login")

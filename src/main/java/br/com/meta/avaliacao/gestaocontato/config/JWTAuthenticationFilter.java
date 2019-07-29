@@ -1,11 +1,8 @@
 package br.com.meta.avaliacao.gestaocontato.config;
 
 import static br.com.meta.avaliacao.gestaocontato.enumerations.SecurityEnum.HEADER_STRING;
-import static br.com.meta.avaliacao.gestaocontato.enumerations.SecurityEnum.SECRET;
-import static br.com.meta.avaliacao.gestaocontato.enumerations.SecurityEnum.TOKEN_PREFIX;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,10 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.meta.avaliacao.gestaocontato.enumerations.SecurityEnum;
 import br.com.meta.avaliacao.gestaocontato.model.Usuario;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import br.com.meta.avaliacao.gestaocontato.util.TokenUtil;
 
 /**
  * JWTAuthenticationFilter
@@ -54,14 +49,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             HttpServletResponse response, 
             FilterChain chain,                                    
             Authentication authResult) throws IOException, ServletException {
-        
-        String username = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getUsername();
-        
-        String token = Jwts.builder().setSubject(username)
-            .setExpiration(new Date(System.currentTimeMillis() + SecurityEnum.EXPIRATION_TIME))
-            .signWith(SignatureAlgorithm.HS512, SECRET).compact();
 
-        String bearerToken = TOKEN_PREFIX + token;
+        String username = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal())
+                .getUsername();
+
+        TokenUtil tokenUtil = new TokenUtil();
+        String bearerToken = tokenUtil.getToken(username);
         response.getWriter().write(bearerToken);
         response.addHeader(HEADER_STRING, bearerToken);
     }
