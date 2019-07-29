@@ -76,6 +76,12 @@
 	</dependencies>
 
 	<build>
+		<finalName>gestaocontato</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -1,19 +1,23 @@
 @host = http://localhost:8080/gestaocontato
 
 ### TOKEN
+# curl -d '{"username":"admin", "password":"123"}' -H "Content-Type: application/json" -X POST http://localhost:8080/gestaocontato/login
 
 POST {{host}}/login
 content-type: application/json
 
 {
-    "username": "user",
+    "username": "admin",
     "password": "123"
 }
 
 ###################################### GET ######################################
 ### 200
 GET {{host}}/user/contatos
-Authorization: Basic admin 123
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2NDM1MzU3NH0.0VZfq3gaxxNeRuC6qqRJzIj72fdaAxDLqDkwFVWF9KT6wctQDVwttCC9FZgEQulE_kMBXpfNU096qKMKJZdytg%
+
+
+
 
 ### 200
 GET {{host}}/user/contatos?size=3&page=0
@@ -112,7 +116,8 @@ Authorization: Basic admin 123
 
 ### 401
 DELETE  {{host}}/admin/contatos/2
-Authorization: Basic admin 12
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNTY0MzUwNzcxfQ.DuwbAnYmbqGEWTozGXvcbbVgA4DP_wMleUKs0dYZjcoeELS6o3tB2td-brwEd8HL5-s9ZJ31LCCqslO23dzfKw
+
 
 ### 404
 DELETE  {{host}}/admin/contatos/20

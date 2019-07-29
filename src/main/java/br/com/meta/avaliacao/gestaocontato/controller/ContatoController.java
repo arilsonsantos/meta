@@ -46,6 +46,7 @@ public class ContatoController {
     public ResponseEntity<List<Contato>> findAll(
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "10") Integer size) {
+
                             
         List<Contato> contatos = contatoService.findAll(page, size);
         return new ResponseEntity<>(contatos, HttpStatus.OK);
