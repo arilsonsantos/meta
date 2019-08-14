@@ -5,6 +5,8 @@ import static br.com.meta.avaliacao.gestaocontato.enumerations.SecurityEnum.TOKE
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
 import br.com.meta.avaliacao.gestaocontato.enumerations.SecurityEnum;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,6 +14,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 /**
  * TokenUtil
  */
+@Component
 public class TokenUtil {
 
     public  String getToken(String username) {
