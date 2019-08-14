@@ -43,8 +43,7 @@ public class SwaggerConfig {
    
 
     private ApiInfo apiInfo() {
-        TokenUtil tokenUtil = new TokenUtil();
-        String adminToken = tokenUtil.getToken("admin");
+        String adminToken = new TokenUtil().getToken("admin");
         return new ApiInfoBuilder().title("Documentação da API Gestão de Contatos")
         .description("Este documento permite testar a API de Gestão de Contatos \n\n" + 
             "Para testar a execução dos métodos, é necessário a utilização de um token, use os tokens abaixo: \n\n" +
