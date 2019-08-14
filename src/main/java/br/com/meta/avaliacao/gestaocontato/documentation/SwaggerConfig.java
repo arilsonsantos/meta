@@ -42,15 +42,13 @@ public class SwaggerConfig {
     }
    
 
-    private ApiInfo apiInfo() {
+    @Bean
+    public ApiInfo apiInfo() {
         String adminToken = new TokenUtil().getToken("admin");
         return new ApiInfoBuilder().title("Documentação da API Gestão de Contatos")
         .description("Este documento permite testar a API de Gestão de Contatos \n\n" + 
-            "Para testar a execução dos métodos, é necessário a utilização de um token, use os tokens abaixo: \n\n" +
-            adminToken + "\n\n" +
-             "Ou utilize o comando abaixo ou use o POSTMAN para geração do token. \n\n\n" +
-            "curl -d '{\"username\":\"admin\", \"password\":\"123\"}' " +
-            "-H \"Content-Type: application/json\" -X POST http://localhost:8080/gestaocontato/login")
+            "Utilize o token abaixo para testar a execução dos métodos: \n\n" +
+            adminToken + "\n\n")
                 .version("1.0.0")
         .build();
     }
