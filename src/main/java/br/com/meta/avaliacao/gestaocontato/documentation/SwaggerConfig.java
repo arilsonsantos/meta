@@ -42,8 +42,7 @@ public class SwaggerConfig {
     }
    
 
-    @Bean
-    public ApiInfo apiInfo() {
+    private ApiInfo apiInfo() {
         String adminToken = new TokenUtil().getToken("admin");
         return new ApiInfoBuilder().title("Documentação da API Gestão de Contatos")
         .description("Este documento permite testar a API de Gestão de Contatos \n\n" + 
