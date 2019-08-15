@@ -9,20 +9,20 @@
 #### Recursos disponíveis
 
 ###### GET 
-* /v1/user/contatos         -  Retorna uma lista de objetos do tipo Contato
-* /v1/user/contatos/{id}    -  Retorna um único objeto do tipo Contato
+* /gestaocontato/v1/user/contatos         -  Retorna uma lista de objetos do tipo Contato
+* /gestaocontato/v1/user/contatos/{id}    -  Retorna um único objeto do tipo Contato
 
 
 ###### POST
-* /v1/admin/contatos        -  Adiciona um registro do tipo Contato
+* /gestaocontato/v1/admin/contatos        -  Adiciona um registro do tipo Contato
 
 
 ###### PUT
-* /v1/admin/contatos/{id}   -  Atualiza um registro do tipo Contato
+* /gestaocontato/v1/admin/contatos/{id}   -  Atualiza um registro do tipo Contato
 
 
 ###### DELETE 
-* /v1/admin/contatos/{id}   -  Deleta um contato
+* /gestaocontato/v1/admin/contatos/{id}   -  Deleta um contato
 
 
 #### Setup 
