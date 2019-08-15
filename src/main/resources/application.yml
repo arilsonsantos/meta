@@ -1,6 +1,7 @@
 server:
   servlet:
     context-path: /gestaocontato
+  port: 8080
 
 spring:
     jpa:

@@ -1,8 +1,9 @@
 @host = http://localhost:8080/gestaocontato
 
-### TOKEN
+### Pegar o TOKEN
 # curl -d '{"username":"admin", "password":"123"}' -H "Content-Type: application/json" -X POST http://localhost:8080/gestaocontato/login
 
+# Pegar o token
 POST {{host}}/login
 content-type: application/json
 
@@ -13,7 +14,7 @@ content-type: application/json
 
 ###################################### GET ######################################
 ### 200
-GET {{host}}/user/contatos
+GET {{host}}/v1/user/contatos
 Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTU2NDM1MzU3NH0.0VZfq3gaxxNeRuC6qqRJzIj72fdaAxDLqDkwFVWF9KT6wctQDVwttCC9FZgEQulE_kMBXpfNU096qKMKJZdytg%
 
 
