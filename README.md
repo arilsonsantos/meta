@@ -2,6 +2,8 @@
 
 
 * A API GestaoContatos fornce recursos para um CRUD de contatos - Adiciona, busca, remove, lista produtos através de serviços rest usando Json content-type.
+(Especificação seguida para desenvolvimento da API - https://github.com/arilsonsantos/meta/blob/token/Contato.yaml)
+
 * Version 1.0.0
 
 #### Recursos disponíveis
